@@ -1,30 +1,73 @@
-function Navbar(){
-function handleClick(){
-    alert("yes you hav clickced...")
-}
+import { Link, useNavigate } from "react-router-dom"
 
-    return(
+
+function Navbar() {
+
+    const token = localStorage.getItem("token")
+    const navigate = useNavigate()
+    const handleLogout =() =>{
+        localStorage.removeItem("token")
+        navigate("/login",{replace:true})
+    }
+
+
+    return (
         <nav className="sticky top-0 bg-indigo-50 border-b border-indigo-100">
-           <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-4">
+            <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-4">
 
-            <h1 className="text-xl font-semibold text-indigo-600">ShopUI</h1>
-            <ul className="hidden md:flex gap-8 text-sm">
-                <li className="hover:text-indigo-600 cursor-pointer transition" >Home</li>
-                <li className="hover:text-indigo-600 cursor-pointer transition"> Products</li>
-                <li className="hover:text-indigo-600 cursor-pointer transition">Contact</li>
-            </ul>
-            <div className="flex items-center gap-3" >
-                <button 
-                onClick={handleClick}
-                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 transition">Login</button>
-                <button
-                onClick={()=>{alert("you have clicked signup function..")}}
-                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 transition">Signup</button>
+                <h1 className="text-xl font-semibold text-indigo-600">ShopUI</h1>
+                <ul className="hidden md:flex gap-8 text-sm">
+                    <Link to="/home">
+                        <li className="hover:text-indigo-600 cursor-pointer transition" >Home</li>
+                    </Link>
+
+                    <Link to="/">
+                        <li className="hover:text-indigo-600 cursor-pointer transition"> Products</li>
+
+                    </Link>
+
+                    <Link to="/cart">
+                        <li className="hover:text-indigo-600 cursor-pointer transition">Cart</li>
+                    </Link>
+
+                    <Link to="/contact">
+                        <li className="hover:text-indigo-600 cursor-pointer transition">Contact Us</li>
+                    </Link>
+
+                     <Link to="/profile">
+                        <li className="hover:text-indigo-600 cursor-pointer transition">Profile</li>
+                    </Link>
+
+
+                </ul>
+                <div className="flex items-center gap-3" >
+
+                    {token ? (
+
+                        <button onClick={handleLogout} className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 transition" onClick={handleLogout}>
+                            Logout
+                        </button>
+
+
+                    ) : (
+                        <>
+                            <Link to="/login">
+                                <button className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 transition">Login</button>
+                            </Link>
+                            <button className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-indigo-600 transition">Signup</button>
+                        </>
+
+
+
+
+                    )}
+
+
+                </div>
             </div>
-           </div>
-           
 
-        </nav>
+
+        </nav >
     )
 }
 
